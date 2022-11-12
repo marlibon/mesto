@@ -1,0 +1,8 @@
+.profile {
+  padding: 40px 0 50px 0;
+  display: grid;
+  width: 100%;
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+
+}

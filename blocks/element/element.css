@@ -1,0 +1,19 @@
+.element {
+  width: 282px;
+  height: 361px;
+  background-color: #fff;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: 282px auto;
+  grid-template-areas: 'element__img element__img'
+  'element__title element__likes';
+  row-gap: 25px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  text-decoration-line: underline;
+  color: #000000;
+}

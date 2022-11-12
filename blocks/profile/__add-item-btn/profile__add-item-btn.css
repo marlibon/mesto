@@ -1,0 +1,17 @@
+.profile__add-item-btn {
+  margin: 0;
+  padding: 0;
+  width: 150px;
+  height: 50px;
+  border: 2px solid #fff;
+  align-self: center;
+  box-sizing: border-box;
+  background-color: #000;
+  background-image: url('../../../images/add-item-btn.svg');
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.profile__add-item-btn:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}

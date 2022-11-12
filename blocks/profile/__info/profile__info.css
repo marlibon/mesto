@@ -1,0 +1,9 @@
+.profile__info {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: repeat(2, auto);
+  grid-template-areas: 'profile__avatar profile__title profile__edit-btn'
+  'profile__avatar profile__subtitle .';
+  column-gap: 18px;
+  row-gap: 8px;
+}

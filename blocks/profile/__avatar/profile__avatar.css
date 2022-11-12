@@ -1,0 +1,12 @@
+.profile__avatar {
+  max-width: 120px;
+  max-height: 120px;
+  border-radius: 50%;
+  grid-area: profile__avatar;
+  margin-right: 12px;
+  transition:  scale 0.5s;
+
+}
+.profile__avatar:hover {
+  scale: 1.1;
+}
