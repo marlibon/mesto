@@ -1,0 +1,16 @@
+.form-edit-profile__submit-btn {
+  background-color: #000;
+  color: #fff;
+  width: 100%;
+  transition: opacity 0.5s;
+  height: 46px;
+  margin-top: 18px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  cursor: pointer;
+  border-radius: 2px;
+}
+.form-edit-profile__submit-btn:hover {
+  opacity: .8;
+}

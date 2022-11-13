@@ -1,0 +1,7 @@
+.popup {
+  position: fixed;
+  transform: translate(-50%, 0);
+  top: 20%;
+  left: 50%;
+  font-family: 'Inter';
+}
