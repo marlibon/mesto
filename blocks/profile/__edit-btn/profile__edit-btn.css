@@ -13,6 +13,8 @@
   background-repeat: no-repeat;
   background-position: center center;
   cursor: pointer;
+  transition: opacity 0.5s;
+
 }
 .profile__edit-btn:hover {
   opacity: 0.6;
