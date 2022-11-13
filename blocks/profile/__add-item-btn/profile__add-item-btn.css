@@ -10,6 +10,8 @@
   background-image: url('../../../images/add-item-btn.svg');
   background-repeat: no-repeat;
   background-position: center center;
+  transition: opacity 0.5s;
+
 }
 .profile__add-item-btn:hover {
   cursor: pointer;
