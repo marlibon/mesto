@@ -1,0 +1,6 @@
+.form-edit-profile {
+  display: flex;
+  flex-direction: column;
+  padding: 36px 36px 37px 36px;
+  width: 358px;
+}

@@ -8,6 +8,8 @@
   height: 19px;
   border: none;
   cursor: pointer;
+  transition: background-image 0.5s;
+
 }
 .element__like-btn:hover {
   background-image: url('../../../images/like-hover.svg');
