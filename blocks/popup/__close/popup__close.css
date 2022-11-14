@@ -10,7 +10,19 @@
   background-repeat: no-repeat;
   transition: background-image 0.5s;
   cursor: pointer;
+  border: none;
+  overflow: hidden;
 }
 .popup__close:hover {
   background-image: url(../../../images/close-btn-hover.svg);
+}
+
+@media screen and (max-width: 680px) {
+  .popup__close {
+    top: -36px;
+    right: 0px;
+    width: 20px;
+    height: 20px;
+
+  }
 }

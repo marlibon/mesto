@@ -7,3 +7,6 @@
   margin: 0 auto;
   align-items: center;
 }
+* {
+  /*outline: 1px solid red;*/
+}
