@@ -10,7 +10,7 @@
     width: 310px;
   }
 }
-@media screen and (max-width: 380px) {
+@media screen and (max-width: 390px) {
   .form-edit-profile {
     width: 238px;
     padding: 22px 22px 24px 22px;;
