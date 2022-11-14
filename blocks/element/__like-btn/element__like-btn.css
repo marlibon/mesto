@@ -1,6 +1,7 @@
 .element__like-btn {
   margin: 0;
   padding: 0;
+  background-color: #fff;
   background-image: url('../../../images/like.svg');
   background-position: center center;
   background-repeat: no-repeat;
@@ -9,6 +10,7 @@
   border: none;
   cursor: pointer;
   transition: background-image 0.5s;
+  margin-top: 6px;
 
 }
 .element__like-btn:hover {
