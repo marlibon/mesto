@@ -7,3 +7,15 @@
   column-gap: 18px;
   row-gap: 8px;
 }
+@media screen and (max-width: 530px) {
+  .profile__info {
+    grid-template-columns: 16% 68% 16%;
+    grid-template-rows: repeat(3, auto);
+    grid-template-areas: 'profile__avatar profile__avatar profile__avatar'
+    '. profile__title profile__edit-btn'
+    'profile__subtitle profile__subtitle profile__subtitle';
+    justify-items: center;
+    align-items: center;
+    gap: 8px 0;
+  }
+}

@@ -10,3 +10,9 @@
   grid-area: profile__subtitle;
   align-self: self-start;
 }
+
+@media screen and (max-width: 390px) {
+  .profile__subtitle {
+    font-size: 14px;
+    line-height: 17px;    }
+}

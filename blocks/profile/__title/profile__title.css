@@ -10,3 +10,9 @@
   grid-area: profile__title;
   align-self: flex-end;
 }
+@media screen and (max-width: 390px) {
+  .profile__title {
+    font-size: 27px;
+    line-height: 33px;
+    }
+}
