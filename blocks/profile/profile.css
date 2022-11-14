@@ -11,6 +11,6 @@
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
     row-gap: 34px;
-    padding-bottom: 34px;
+    padding-bottom: 32px;
   }
 }
