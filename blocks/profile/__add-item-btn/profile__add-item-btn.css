@@ -24,8 +24,11 @@
 }
 @media screen and (max-width: 530px) {
   .profile__add-item-btn {
-    justify-self: center;
-    width: 100%;
     background-size: 16px 16px;
+  }
+}
+@media screen and (max-width: 430px) {
+  .profile__add-item-btn {
+    width: 100%;
   }
 }

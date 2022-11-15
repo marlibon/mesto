@@ -9,10 +9,14 @@
   color: #FFFFFF;
   grid-area: profile__title;
   align-self: flex-end;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
-@media screen and (max-width: 390px) {
+@media screen and (max-width: 530px) {
   .profile__title {
     font-size: 27px;
     line-height: 33px;
+    max-width: 210px;
     }
 }

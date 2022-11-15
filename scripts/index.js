@@ -12,7 +12,7 @@ let profileTitle = document.querySelector('.profile__title'); // Имя на с�
 let profileSubtitle = document.querySelector('.profile__subtitle'); // профессия/подзаголовок на странице
 let inputTitle = document.querySelector('.form-edit-profile__input_type_name'); // имя на поле ввода в модальном окне
 let inputSubtitle = document.querySelector('.form-edit-profile__input_type_activity'); // профессия/подзаголовок на модальном окне
-const buttonSave = document.querySelector('.form-edit-profile__submit-btn'); // кнопка сохранить
+const formEditProfile = document.querySelector('.form-edit-profile'); // форма
 
 
 /* функция, которая добавляет класс  класс 'popup_opened' для отображения попапа + берем данные со страницы и вставляем в форму */
@@ -36,8 +36,8 @@ const functionPopupClosedByClickOnOverlay = function(event) {
   functionPopupClosed();
 }
 /* функция которая сохраняет данные формы на странице (запускается при нажатии на кнопку сохранить) */
-const functionSaveInputData = function () {
-
+const functionSaveInputData = function (event) {
+  event.preventDefault(); /* отключаем отправку формы по умолчанию */
   profileTitle.textContent = inputTitle.value;
   profileSubtitle.textContent = inputSubtitle.value;
 
@@ -54,5 +54,5 @@ popupCloseButtonElement.addEventListener('click', functionPopupClosed);
 /* вешаем прослушивание кликов на оверлей */
 popupElement.addEventListener('click', functionPopupClosedByClickOnOverlay);
 
-/* вешаем прослушиватель на кнопку сохранить */
-buttonSave.addEventListener('click', functionSaveInputData);
+/* вешаем прослушиватель на форму */
+formEditProfile.addEventListener('submit', functionSaveInputData);

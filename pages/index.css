@@ -37,6 +37,4 @@
 
 @import url('../blocks/form-edit-profile/form-edit-profile.css');
 @import url('../blocks/form-edit-profile/__input/form-edit-profile__input.css');
-@import url('../blocks/form-edit-profile/__input/_type_name/form-edit-profile__input_type_name.css');
-@import url('../blocks/form-edit-profile/__input/_type_activity/form-edit-profile__input_type_activity.css');
 @import url('../blocks/form-edit-profile/__submit-btn/form-edit-profile__submit-btn.css');

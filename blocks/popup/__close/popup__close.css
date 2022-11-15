@@ -8,13 +8,13 @@
   background-image: url('../../../images/close-btn.svg');
   background-position: center center;
   background-repeat: no-repeat;
-  transition: background-image 0.5s;
+  transition: opacity 0.5s;
   cursor: pointer;
   border: none;
   overflow: hidden;
 }
 .popup__close:hover {
-  background-image: url(../../../images/close-btn-hover.svg);
+  opacity: .6;
 }
 
 @media screen and (max-width: 680px) {

@@ -1,7 +1,7 @@
 .element__like-btn {
   margin: 0;
   padding: 0;
-  background-color: #fff;
+  background-color: rgba(0, 0, 0, 0.0);
   background-image: url('../../../images/like.svg');
   background-position: center center;
   background-repeat: no-repeat;
@@ -9,13 +9,15 @@
   height: 19px;
   border: none;
   cursor: pointer;
-  transition: background-image 0.5s;
+  transition: all 0.5s;
   margin-top: 6px;
 
 }
 .element__like-btn:hover {
-  background-image: url('../../../images/like-hover.svg');
+  opacity: .5;
 }
 .element__like-btn:active {
   background-image: url('../../../images/like-active.svg');
+  opacity: 1;
+
 }
