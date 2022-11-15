@@ -9,7 +9,7 @@
 </head>
 <body class="page">
   <header class="header">
-    <img src="./images/header-logo.svg" alt ="логотип" class="header__logo">
+    <img src="./images/header-logo.svg" alt="логотип" class="header__logo">
   </header>
   <main class="main page__content">
     <section class="profile">
@@ -25,63 +25,51 @@
       <article class="element">
         <img src="./images/karachaevsk.png" alt="Карачаевск" class="element__img">
         <h3 class="element__title">Карачаевск</h3>
-        <div class="element__likes">
-          <button class="element__like-btn"></button>
-        </div>
+        <button type="button" class="element__like-btn"></button>
       </article>
       <article class="element">
         <img src="./images/elbrus.png" alt="Эльбрус" class="element__img">
         <h3 class="element__title">Гора Эльбрус</h3>
-        <div class="element__likes">
-          <button class="element__like-btn"></button>
-        </div>
+        <button type="button" class="element__like-btn"></button>
       </article>
       <article class="element">
         <img src="./images/dombay.png" alt="Домбай" class="element__img">
         <h3 class="element__title">Домбай</h3>
-        <div class="element__likes">
-          <button class="element__like-btn"></button>
-        </div>
+        <button type="button" class="element__like-btn"></button>
       </article>
       <article class="element">
         <img src="./images/elbrus.png" alt="Эльбрус" class="element__img">
         <h3 class="element__title">Гора Эльбрус</h3>
-        <div class="element__likes">
-          <button class="element__like-btn"></button>
-        </div>
+        <button type="button" class="element__like-btn"></button>
       </article>
       <article class="element">
         <img src="./images/dombay.png" alt="Домбай" class="element__img">
         <h3 class="element__title">Домбай</h3>
-        <div class="element__likes">
-          <button class="element__like-btn"></button>
-        </div>
+        <button type="button" class="element__like-btn"></button>
       </article>
       <article class="element">
         <img src="./images/karachaevsk.png" alt="Карачаево-Черкесск" class="element__img">
         <h3 class="element__title">Карачаево-Черкесск</h3>
-        <div class="element__likes">
-          <button class="element__like-btn"></button>
-        </div>
+        <button type="button" class="element__like-btn"></button>
       </article>
     </section>
   </main>
   <footer class="footer page__content">
-    <p class="footer__text">&copy;  2022 Mesto Russia</p>
+    <p class="footer__text">&copy; 2022 Mesto Russia</p>
   </footer>
-<section class="popup">
- <div class="popup__container">
-  <button class="popup__close"></button>
-  <div class="popup__content">
-    <h3 class="popup__title">Редактировать профиль</h3>
-    <form action="/" class="form-edit-profile">
-      <input type="text" placeholder="Жак-Ив Кусто" class="form-edit-profile__input form-edit-profile__input_type_name">
-      <input type="text" placeholder="Исследователь океана" class="form-edit-profile__input form-edit-profile__input_type_activity">
-      <button type="button" class="form-edit-profile__submit-btn">Сохранить</button>
-    </form>
-  </div>
-  </div>
-</section>
-<script src="./pages/index.js"></script>
+  <section class="popup">
+    <div class="popup__container">
+      <button type="button" class="popup__close"></button>
+      <h3 class="popup__title">Редактировать профиль</h3>
+      <form name="form-edit-profile" action="/" class="form-edit-profile">
+        <input type="text" placeholder="Жак-Ив Кусто"
+          class="form-edit-profile__input form-edit-profile__input_type_name" name="type_name">
+        <input type="text" placeholder="Исследователь океана"
+          class="form-edit-profile__input form-edit-profile__input_type_activity" name="type_activity">
+        <button type="submit" class="form-edit-profile__submit-btn">Сохранить</button>
+      </form>
+    </div>
+  </section>
+  <script src="./scripts/index.js"></script>
 </body>
 </html>

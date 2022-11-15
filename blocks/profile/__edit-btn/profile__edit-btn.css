@@ -14,6 +14,7 @@
   background-position: center center;
   cursor: pointer;
   transition: opacity 0.5s;
+  margin-right: 15px;
 
 }
 .profile__edit-btn:hover {
