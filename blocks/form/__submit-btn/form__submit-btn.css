@@ -1,4 +1,4 @@
-.form-edit-profile__submit-btn {
+.form__submit-btn {
   background-color: #000;
   color: #fff;
   width: 100%;
@@ -12,11 +12,11 @@
   border-radius: 2px;
   border: none;
 }
-.form-edit-profile__submit-btn:hover {
+.form__submit-btn:hover {
   opacity: .8;
 }
 @media screen and (max-width: 680px) {
-  .form-edit-profile__submit-btn {
+  .form__submit-btn {
     margin-top: 16px;
     font-size: 14px;
     line-height: 18px;

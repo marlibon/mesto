@@ -22,54 +22,58 @@
       <button type="button" class="profile__add-item-btn"></button>
     </section>
     <section class="elements">
-      <article class="element">
-        <img src="./images/karachaevsk.png" alt="Карачаевск" class="element__img">
-        <h3 class="element__title">Карачаевск</h3>
-        <button type="button" class="element__like-btn"></button>
-      </article>
-      <article class="element">
-        <img src="./images/elbrus.png" alt="Эльбрус" class="element__img">
-        <h3 class="element__title">Гора Эльбрус</h3>
-        <button type="button" class="element__like-btn"></button>
-      </article>
-      <article class="element">
-        <img src="./images/dombay.png" alt="Домбай" class="element__img">
-        <h3 class="element__title">Домбай</h3>
-        <button type="button" class="element__like-btn"></button>
-      </article>
-      <article class="element">
-        <img src="./images/elbrus.png" alt="Эльбрус" class="element__img">
-        <h3 class="element__title">Гора Эльбрус</h3>
-        <button type="button" class="element__like-btn"></button>
-      </article>
-      <article class="element">
-        <img src="./images/dombay.png" alt="Домбай" class="element__img">
-        <h3 class="element__title">Домбай</h3>
-        <button type="button" class="element__like-btn"></button>
-      </article>
-      <article class="element">
-        <img src="./images/karachaevsk.png" alt="Карачаево-Черкесск" class="element__img">
-        <h3 class="element__title">Карачаево-Черкесск</h3>
-        <button type="button" class="element__like-btn"></button>
-      </article>
     </section>
   </main>
   <footer class="footer page__content">
     <p class="footer__text">&copy; 2022 Mesto Russia</p>
   </footer>
-  <section class="popup">
+  <section class="popup popup_form_edit">
     <div class="popup__container">
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
-      <form name="form-edit-profile" action="/" class="form-edit-profile">
+      <form name="form" action="/" class="form form_edit">
         <input type="text" placeholder="Жак-Ив Кусто"
-          class="form-edit-profile__input form-edit-profile__input_type_name" name="type_name">
+          class="form__input form__input_type_name" name="type_name">
         <input type="text" placeholder="Исследователь океана"
-          class="form-edit-profile__input form-edit-profile__input_type_activity" name="type_activity">
-        <button type="submit" class="form-edit-profile__submit-btn">Сохранить</button>
+          class="form__input form__input_type_activity" name="type_activity">
+        <button type="submit" class="form__submit-btn">Сохранить</button>
       </form>
     </div>
   </section>
+
+  <section class="popup popup_form_new">
+    <div class="popup__container">
+      <button type="button" class="popup__close"></button>
+      <h3 class="popup__title">Новое место</h3>
+      <form name="form" action="/" class="form form_new">
+        <input type="text" placeholder="Название"
+          class="form__input form__input_type_new" name="type_new">
+        <input type="text" placeholder="Ссылка на картинку"
+          class="form__input form__input_type_url" name="type_url">
+        <button type="submit" class="form__submit-btn">Создать</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="popup popup_view-image"">
+    <div class="popup__container popup__container_image">
+      <button type="button" class="popup__close"></button>
+      <figure class="popup__fig">
+        <img class="popup__image" src="">
+        <figcaption class="popup__description"></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <template id="elements">
+    <article class="element">
+      <img src="" alt="" class="element__img">
+      <h3 class="element__title"></h3>
+      <button type="button" class="element__like-btn"></button>
+      <button type="button" class="element__trash-btn"></button>
+    </article>
+  </template>
+
   <script src="./scripts/index.js"></script>
 </body>
 </html>

@@ -24,16 +24,22 @@
 @import url('../blocks/element/__title/element__title.css');
 @import url('../blocks/element/__likes/element__likes.css');
 @import url('../blocks/element/__like-btn/element__like-btn.css');
+@import url('../blocks/element/__trash-btn/element__trash-btn.css');
+@import url('../blocks/element/__like-btn/_active/element__like-btn_active.css');
 
 @import url('../blocks/footer/footer.css');
 @import url('../blocks/footer/__text/footer__text.css');
 
 @import url('../blocks/popup/popup.css');
 @import url('../blocks/popup/__container/popup__container.css');
+@import url('../blocks/popup/__container/_image/popup__container_image.css');
 @import url('../blocks/popup/__close/popup__close.css');
 @import url('../blocks/popup/__title/popup__title.css');
 @import url('../blocks/popup/_opened/popup_opened.css');
+@import url('../blocks/popup/__fig/popup__fig.css');
+@import url('../blocks/popup/__image/popup__image.css');
+@import url('../blocks/popup/__description/popup__description.css');
 
-@import url('../blocks/form-edit-profile/form-edit-profile.css');
-@import url('../blocks/form-edit-profile/__input/form-edit-profile__input.css');
-@import url('../blocks/form-edit-profile/__submit-btn/form-edit-profile__submit-btn.css');
+@import url('../blocks/form/form.css');
+@import url('../blocks/form/__input/form__input.css');
+@import url('../blocks/form/__submit-btn/form__submit-btn.css');

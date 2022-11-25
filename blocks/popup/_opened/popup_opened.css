@@ -2,4 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.5s;
+
 }
