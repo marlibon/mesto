@@ -27,29 +27,29 @@
   <footer class="footer page__content">
     <p class="footer__text">&copy; 2022 Mesto Russia</p>
   </footer>
-  <section class="popup popup_form_edit">
+  <section class="popup popup_form-edit">
     <div class="popup__container">
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
       <form name="form" action="/" class="form form_edit">
-        <input type="text" placeholder="Жак-Ив Кусто"
+        <input type="text" placeholder="Имя"
           class="form__input form__input_type_name" name="type_name">
-        <input type="text" placeholder="Исследователь океана"
+        <input type="text" placeholder="Род деятельности"
           class="form__input form__input_type_activity" name="type_activity">
         <button type="submit" class="form__submit-btn">Сохранить</button>
       </form>
     </div>
   </section>
 
-  <section class="popup popup_form_new">
+  <section class="popup popup_form-add-element">
     <div class="popup__container">
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Новое место</h3>
-      <form name="form" action="/" class="form form_new">
+      <form name="form" action="/" class="form form-add-element">
         <input type="text" placeholder="Название"
-          class="form__input form__input_type_new" name="type_new">
+          class="form__input form__input_type_name-new-element" name="type_name-new-element">
         <input type="text" placeholder="Ссылка на картинку"
-          class="form__input form__input_type_url" name="type_url">
+          class="form__input form__input_type_url-new-element" type="url" name="type_url-new-element">
         <button type="submit" class="form__submit-btn">Создать</button>
       </form>
     </div>
@@ -59,21 +59,22 @@
     <div class="popup__container popup__container_image">
       <button type="button" class="popup__close"></button>
       <figure class="popup__fig">
-        <img class="popup__image" src="https://marlibon.github.io/mesto/images/inzer-zubchatki.jpg">
+        <img class="popup__image" src="">
         <figcaption class="popup__description"></figcaption>
       </figure>
     </div>
   </section>
 
-  <template id="elements">
+  <template id="template-element">
     <article class="element">
-      <img src="https://marlibon.github.io/mesto/images/inzer-zubchatki.jpg" alt="" class="element__img">
+      <img src="/" alt="" class="element__img">
       <h3 class="element__title"></h3>
       <button type="button" class="element__like-btn"></button>
       <button type="button" class="element__trash-btn"></button>
     </article>
   </template>
 
+  <script src="./scripts/data.js"></script>
   <script src="./scripts/index.js"></script>
 </body>
 </html>
