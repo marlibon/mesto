@@ -8,4 +8,5 @@
 }
 .element__img:hover {
   filter: brightness(120%);
+  cursor: pointer;
 }
