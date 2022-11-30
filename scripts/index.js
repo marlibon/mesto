@@ -132,10 +132,6 @@ formEditProfile.addEventListener('submit', editProfileSubmit);
 formAddElement.addEventListener('submit', submitNewElement);
 
 
-
-
-
-
 /* функция, которая удаляет класс класс 'popup_opened' для закрытия попапа */
 const closePopup = namePopup =>  namePopup.classList.remove('popup_opened');
 
