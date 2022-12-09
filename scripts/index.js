@@ -13,7 +13,7 @@ const inputSubtitle = formEditProfile.querySelector('.form__input_type_activity'
 const buttonCloseInPopupEditProfile = popupEditProfile.querySelector('.popup__close'); // кнопка закрытия попапа
 
 const popupAddElement = document.querySelector('.popup_form-add-element'); // попап добавления карточки
-const formAddElement = document.querySelector('.form-add-element'); // форма добавления карточки
+const formAddElement = popupAddElement.querySelector('.form-add-element'); // форма добавления карточки
 const inputNameNewElement = formAddElement.querySelector('.form__input_type_name-new-element'); // имя нового элемента в поле ввода в модальном окне
 const inputUrlNewElement = formAddElement.querySelector('.form__input_type_url-new-element'); // ссылка на картинку нового элемента на модальном окне
 const buttonCloseInPopupAddElement = popupAddElement.querySelector('.popup__close'); // кнопка закрытия попапа
@@ -48,6 +48,7 @@ arrayElements.forEach(function(item) {
 // функция открытия попапа с аргументом
 const openPopup = namePopup => {
   namePopup.classList.add('popup_opened');
+  addListenerPopupByKey(namePopup);
 }
 
 //создаем элемент
@@ -105,19 +106,34 @@ const editProfileSubmit = function (event) {
 /* функция которая сохраняет данные формы добавления новых элементов на странице (запускается при нажатии на кнопку сохранить) */
 const submitNewElement = function (event) {
   event.preventDefault(); /* отключаем отправку формы по умолчанию */
-
-    if (!inputNameNewElement.value || !inputUrlNewElement.value) {
-      return alert('не заполнено одно или несколько полей');}
-
   const newElement = createElement(inputNameNewElement.value, inputUrlNewElement.value);
   renderElements(newElement)
   formAddElement.reset(); //сброс данных формы, чтобы при следующем добавлении не было заполненных значений
   closePopup(popupAddElement); // закрываем попап
 }
 
+/* функция, которая удаляет класс класс 'popup_opened' для закрытия попапа */
+const closePopup = namePopup =>  {
+  namePopup.classList.remove('popup_opened');
+  document.removeEventListener('keyup', closeByEscape)
+
+}
+
+/* функция закрытия попапа по клавише ESC */
+const closeByEscape = (e) => {
+  if ((e).key === 'Escape') {
+    closePopup(document.querySelector('.popup_opened'))
+  }
+}
+
+/* вешаем прослушиватель на кнопку Escape при открытии модального окна*/
+function addListenerPopupByKey () {
+  document.addEventListener('keyup', closeByEscape);
+}
 /* вешаем прослушиватель клика на кнопку вызова модального окна и пишем туда нашу функцию*/
-buttonEditProfile.addEventListener('click', function () {
+buttonEditProfile.addEventListener('click', function (e) {
   openPopup(popupEditProfile); // открываем попап редактирования профиля
+  closeByEscape(e, popupEditProfile)
 });
 
 /* вешаем прослушиватель клика на кнопку добавления формы */
@@ -125,15 +141,14 @@ buttonAddElement.addEventListener('click', function () {
   openPopup(popupAddElement); // открываем попап добавления элемента
 });
 
-/* вешаем прослушиватель отправку формы  */
+/* вешаем прослушиватель на отправку формы  */
 formEditProfile.addEventListener('submit', editProfileSubmit);
 
 /* вешаем прослушиватель на отправку формы  */
 formAddElement.addEventListener('submit', submitNewElement);
 
 
-/* функция, которая удаляет класс класс 'popup_opened' для закрытия попапа */
-const closePopup = namePopup =>  namePopup.classList.remove('popup_opened');
+
 
 
 /* вешаем прослушивание кликов на оверлей (для каждого попапа) */

@@ -32,10 +32,28 @@
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
       <form name="form" action="/" class="form form_edit">
-        <input type="text" placeholder="Имя"
-          class="form__input form__input_type_name" name="type_name">
-        <input type="text" placeholder="Род деятельности"
-          class="form__input form__input_type_activity" name="type_activity">
+        <input
+          type="text"
+          placeholder="Имя"
+          class="form__input form__input_type_name"
+          name="type_name"
+          id="type_name"
+          minlength="2"
+          maxlength="40"
+          required
+        >
+        <span class="form__error type_name-error"></span>
+        <input
+          type="text"
+          placeholder="Род деятельности"
+          class="form__input form__input_type_activity"
+          name="type_activity"
+          id="type_activity"
+          minlength="2"
+          maxlength="200"
+          required
+        >
+        <span class="form__error type_activity-error"></span>
         <button type="submit" class="form__submit-btn">Сохранить</button>
       </form>
     </div>
@@ -46,11 +64,27 @@
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Новое место</h3>
       <form name="form" action="/" class="form form-add-element">
-        <input type="text" placeholder="Название"
-          class="form__input form__input_type_name-new-element" name="type_name-new-element">
-        <input placeholder="Ссылка на картинку"
-          class="form__input form__input_type_url-new-element" type="url" name="type_url-new-element">
-        <button type="submit" class="form__submit-btn">Создать</button>
+        <input
+          type="text"
+          placeholder="Название"
+          class="form__input form__input_type_name-new-element"
+          name="type_name-new-element"
+          id="type_name-new-element"
+          minlength="2"
+          maxlength="30"
+          required
+        >
+        <span class="form__error type_name-new-element-error"></span>
+        <input
+          placeholder="Ссылка на картинку"
+          class="form__input form__input_type_url-new-element"
+          type="url"
+          name="type_url-new-element"
+          id="type_url-new-element"
+          required
+        >
+        <span class="form__error type_url-new-element-error"></span>
+        <button type="submit" class="form__submit-btn form__submit-btn_disable">Создать</button>
       </form>
     </div>
   </section>
@@ -75,6 +109,7 @@
   </template>
 
   <script src="./scripts/data.js"></script>
+  <script src="./scripts/validate.js"></script>
   <script src="./scripts/index.js"></script>
 </body>
 </html>
