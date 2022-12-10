@@ -155,22 +155,15 @@ formEditProfile.addEventListener("submit", editProfileSubmit);
 /* вешаем прослушиватель на отправку формы добавления элемента */
 formAddElement.addEventListener("submit", submitNewElement);
 
+const checkClickByOverlay = (event) => {
+  if (event.target == event.currentTarget) {
+    closePopup(event.currentTarget);
+  }
+}
 /* вешаем прослушивание кликов на оверлей (для каждого попапа) */
-popupEditProfile.addEventListener("click", function (event) {
-  if (event.target == event.currentTarget) {
-    closePopup(popupEditProfile);
-  }
-});
-popupAddElement.addEventListener("click", function (event) {
-  if (event.target == event.currentTarget) {
-    closePopup(popupAddElement);
-  }
-});
-popupViewImage.addEventListener("click", function (event) {
-  if (event.target == event.currentTarget) {
-    closePopup(popupViewImage);
-  }
-});
+popupEditProfile.addEventListener("click", checkClickByOverlay);
+popupAddElement.addEventListener("click", checkClickByOverlay);
+popupViewImage.addEventListener("click", checkClickByOverlay);
 
 /* вешаем прослушиватель клика на кнопку закрытия модального окна */
 buttonCloseInPopupEditProfile.addEventListener("click", function (event) {
