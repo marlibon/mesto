@@ -8,9 +8,9 @@ const popupEditProfile = document.querySelector(".popup_form-edit"); // попа
 const formEditProfile = popupEditProfile.querySelector(".form_edit"); // форма редактирования профиля
 const profileTitle = document.querySelector(".profile__title"); // Имя на странице
 const profileSubtitle = document.querySelector(".profile__subtitle"); // профессия/подзаголовок на странице
-const inputTitle = formEditProfile.querySelector(".form__input_type_name"); // имя на поле ввода в модальном окне
+const inputTitle = formEditProfile.querySelector(".form__input_name"); // имя на поле ввода в модальном окне
 const inputSubtitle = formEditProfile.querySelector(
-  ".form__input_type_activity"
+  ".form__input_activity"
 ); // профессия/подзаголовок на модальном окне
 const buttonCloseInPopupEditProfile =
   popupEditProfile.querySelector(".popup__close"); // кнопка закрытия попапа
@@ -18,10 +18,10 @@ const buttonCloseInPopupEditProfile =
 const popupAddElement = document.querySelector(".popup_form-add-element"); // попап добавления карточки
 const formAddElement = popupAddElement.querySelector(".form-add-element"); // форма добавления карточки
 const inputNameNewElement = formAddElement.querySelector(
-  ".form__input_type_name-new-element"
+  ".form__input_name-new-element"
 ); // имя нового элемента в поле ввода в модальном окне
 const inputUrlNewElement = formAddElement.querySelector(
-  ".form__input_type_url-new-element"
+  ".form__input_url-new-element"
 ); // ссылка на картинку нового элемента на модальном окне
 const buttonCloseInPopupAddElement =
   popupAddElement.querySelector(".popup__close"); // кнопка закрытия попапа
@@ -89,7 +89,7 @@ const createElement = (name, link) => {
 //функция добавления элемента на страницу
 const renderElements = (element) => {
   elementsSection.prepend(element);
-}; 
+};
 
 //функция удаления элемента
 const deleteElement = (element) => {
