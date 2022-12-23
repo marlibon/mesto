@@ -1,91 +1,89 @@
 export class FormValidator {
-  constructor (configuration, form) {
+  constructor(configuration, formSelector) {
     this._inputSelector = configuration.inputSelector;
     this._submitButtonSelector = configuration.submitButtonSelector;
     this._inactiveButtonClass = configuration.inactiveButtonClass;
     this._inputErrorClass = configuration.inputErrorClass;
     this._errorClass = configuration.errorClass;
-    this._formSelector = form;
+    this._formSelector = formSelector;
+
+    this._formElement = document.querySelector(this._formSelector); // форму сохранили в переменную
+    this._inputList = Array.from(
+      this._formElement.querySelectorAll(this._inputSelector)
+    ); // массив инпутов в переменной
+    this._buttonElement = this._formElement.querySelector(
+      this._submitButtonSelector
+    ); // кнопка сабмита в переменной
   }
-  _showInputError (inputElement, errorMessage, inputErrorClass, errorClass) {
-    const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.add(inputErrorClass);
+  _showInputError(inputElement, errorMessage) {
+    const errorElement = this._formElement.querySelector(
+      `.${inputElement.id}-error`
+    );
+    inputElement.classList.add(this._inputErrorClass);
     errorElement.textContent = errorMessage;
-    errorElement.classList.add(errorClass);
+    errorElement.classList.add(this._errorClass);
   }
 
-  _hideInputError (inputElement, inputErrorClass, errorClass) {
-    const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.remove(inputErrorClass);
-    errorElement.classList.remove(errorClass);
+  _hideInputError(inputElement) {
+    const errorElement = this._formElement.querySelector(
+      `.${inputElement.id}-error`
+    );
+    inputElement.classList.remove(this._inputErrorClass);
+    errorElement.classList.remove(this._errorClass);
     errorElement.textContent = "";
   }
 
   _checkInputValidity(inputElement) {
-
-    if (!inputElement.validity.valid) {
-      this._showInputError(
-        inputElement,
-        inputElement.validationMessage,
-        this._inputErrorClass,
-        this._errorClass
-      );
-    } else {
-      this._hideInputError(
-        inputElement,
-        this._inputErrorClass,
-        this._errorClass
-        );
-    }
+    !inputElement.validity.valid
+      ? this._showInputError(inputElement, inputElement.validationMessage)
+      : this._hideInputError(inputElement);
   }
 
-  _hasInvalidInput (inputList) {
-    return inputList.some((inputElement) => {
+  _hasInvalidInput() {
+    return this._inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     });
   }
 
-  _toggleButtonState (inputList, buttonElement) {
-    if (this._hasInvalidInput(inputList)) {
-      buttonElement.classList.add(this._inactiveButtonClass);
-      buttonElement.disabled = true;
+  _toggleButtonState() {
+    if (this._hasInvalidInput()) {
+      this._buttonElement.classList.add(this._inactiveButtonClass);
+      this._buttonElement.disabled = true;
     } else {
-      buttonElement.classList.remove(this._inactiveButtonClass);
-      buttonElement.disabled = false;
+      this._buttonElement.classList.remove(this._inactiveButtonClass);
+      this._buttonElement.disabled = false;
     }
   }
-
+  /* функция сброса ошибок, вызывается при повторном открытии попапа */
+  _resetErrorsValidation() {
+    this._inputList.forEach((inputElement) => {
+      if (inputElement.classList.contains(this._inputErrorClass)) {
+        this._hideInputError(inputElement);
+      }
+      this._toggleButtonState();
+    });
+  }
   _setEventListeners() {
-
-    const inputList = Array.from(
-      this._formElement.querySelectorAll(this._inputSelector)
-    );
-    const buttonElement = this._formElement.querySelector(this._submitButtonSelector);
-
-    this._toggleButtonState(inputList, buttonElement);
-
-    this._formElement.addEventListener('reset', () => {
-      setTimeout( this._toggleButtonState(inputList, buttonElement), 0)
-
-      })
-    inputList.forEach((inputElement) => {
+    this._toggleButtonState();
+    this._formElement.addEventListener("reset", () => {
+      /* таймер нужен, чтобы прошло время между моментом сброса формы и новой валидацией формы (в т.ч. состояние сабмита). Если убрать его, то форма не успевает очиститься до валидации. Нулевой таймер кажется бессмысленным, но на отработку этой функции проходит время, достаточное для окончания сброса формы. Вариант с отслеживанием сброса формы и установки setTimeout предложил другой ревьюер в ПР6. Решение действительно, костыльное, но другого рабочего способа очистки ошибок после закрытия заполненного попапа найти не удалось.*/
+      setTimeout(() => {
+        this._resetErrorsValidation();
+      }, 0);
+    });
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._checkInputValidity(inputElement);
-        this._toggleButtonState(inputList, buttonElement);
+        this._toggleButtonState();
       });
     });
-
   }
 
-  enableValidation () {
-    this._formElement = document.querySelector(this._formSelector);
-
+  enableValidation() {
     this._formElement.addEventListener("submit", function (evt) {
-        evt.preventDefault();
-      });
-
+      evt.preventDefault();
+    });
     this._setEventListeners();
-
   }
 }
 
@@ -95,6 +93,4 @@ export const config = {
   inactiveButtonClass: "form__submit-btn_disable",
   inputErrorClass: "form__input_type_error",
   errorClass: "form__error_visible",
-}
-
-
+};

@@ -16,11 +16,11 @@ const initialCards = [
     link: './images/muradim.jpg'
   },
   {
-    name: 'гора Торатау',
-    link: './images/toratau.jpg'
-  },
-  {
     name: 'Капова пещера',
     link: './images/kapova.jpg'
+  },
+  {
+    name: 'гора Торатау',
+    link: './images/toratau.jpg'
   }
 ];
