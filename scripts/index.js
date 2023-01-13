@@ -2,51 +2,35 @@
 import { Card } from "./Card.js";
 import { FormValidator, config } from "./FormValidator.js";
 
-/* объявляем все переменные */
-/* кнопки */
-const buttonEditProfile = document.querySelector(".profile__edit-btn"); // кнопка редактирования профиля
-const buttonAddElement = document.querySelector(".profile__add-item-btn"); // кнопка добавления нового элемента
+/* ИМПОРТ ПЕРЕМЕННЫХ*/
+import {
+  initialCards,
+  buttonEditProfile,
+  buttonAddElement,
+  popupEditProfile,
+  formEditProfile,
+  profileTitle,
+  profileSubtitle,
+  inputTitle,
+  inputSubtitle,
+  buttonCloseInPopupEditProfile,
+  popupAddCard,
+  formAddCard,
+  inputNameNewCard,
+  inputUrlNewCard,
+  buttonCloseInpopupAddCard,
+  templateSelector,
+  popupViewImage,
+  nameElementPopupViewImage,
+  imageElementPopupViewImage,
+  buttonCloseInPopupViewImage,
+  cardsSection
 
-/* ПОПАП РЕДАКТИРОВАНИЯ ПРОФИЛЯ */
-const popupEditProfile = document.querySelector(".popup_form-edit"); // попап редактирования профиля
-const formEditProfile = popupEditProfile.querySelector(".form_edit"); // форма редактирования профиля
-const profileTitle = document.querySelector(".profile__title"); // Имя на странице
-const profileSubtitle = document.querySelector(".profile__subtitle"); // профессия/подзаголовок на странице
-const inputTitle = formEditProfile.querySelector(".form__input_name"); // имя на поле ввода в модальном окне
-const inputSubtitle = formEditProfile.querySelector(".form__input_activity"); // профессия/подзаголовок на модальном окне
-const buttonCloseInPopupEditProfile =
-  popupEditProfile.querySelector(".popup__close"); // кнопка закрытия попапа
+} from '../utils/constants.js';
+import { Section } from "./Section.js";
 
-/* ПОПАП ДОБАВЛЕНИЯ КАРТОЧКИ*/
-const popupAddCard = document.querySelector(".popup_form-add-element"); // попап добавления карточки
-const formAddCard = popupAddCard.querySelector(".form-add-element"); // форма добавления карточки
-const inputNameNewCard = formAddCard.querySelector(
-  ".form__input_name-new-element"
-); // имя нового элемента в поле ввода в модальном окне
-const inputUrlNewCard = formAddCard.querySelector(
-  ".form__input_url-new-element"
-); // ссылка на картинку нового элемента на модальном окне
-const buttonCloseInpopupAddCard = popupAddCard.querySelector(".popup__close"); // кнопка закрытия попапа
-const templateSelector = "#template-card";
-
-/* ПОПАП ПРОСМОТРА КАРТИНКИ */
-const popupViewImage = document.querySelector(".popup_view-image"); // попап просмотра картинки
-const nameElementPopupViewImage = popupViewImage.querySelector(
-  ".popup__description"
-); // описание попапа
-const imageElementPopupViewImage =
-  popupViewImage.querySelector(".popup__image"); // картинка попапа
-const buttonCloseInPopupViewImage =
-  popupViewImage.querySelector(".popup__close"); // кнопка закрытия попапа
-
-/* СЕКЦИЯ HTML */
-const cardsSection = document.querySelector(".elements");
 
 /* ФУНКЦИИ */
-//добавление элемента на страницу
-const renderCard = (element) => {
-  cardsSection.prepend(element);
-};
 
 // открытие попапа
 const openPopup = (namePopup) => {
@@ -55,33 +39,56 @@ const openPopup = (namePopup) => {
 };
 
 // функция открытия попапа просмотра картинки (подмена урл и описания в верстке), экспорт, чтобы можно было использовать в модуле Card, т.к. там своя область видимости
-const openPopupViewImage = (link, name) => {
+const _handleImageClick = (link, name) => {
   nameElementPopupViewImage.textContent = name;
   imageElementPopupViewImage.src = link;
   imageElementPopupViewImage.alt = name;
   openPopup(popupViewImage);
 };
 
-const generateACard = (values, template) => {
+const generateCard = (values, template) => {
   const newElement = new Card(
     {
       name: values.name,
       link: values.link,
     },
     template,
-    openPopupViewImage
+    _handleImageClick
   );
   return newElement.generateCard();
 };
 
-const addCards = (arrayCards) => {
-  arrayCards.forEach(function (item) {
-    const cardElement = generateACard(item, templateSelector);
-    renderCard(cardElement);
-  });
-};
 
-addCards(initialCards); // запуск отображения базовых 6 карточек
+const baseCards = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const newElement = new Card(
+      {
+        name: item.name,
+        link: item.link,
+      },
+      templateSelector,
+      _handleImageClick
+    );
+    const cardElement = newElement.generateCard();
+    baseCards.addItem(cardElement);
+  },
+},
+cardsSection)
+
+
+baseCards.renderItems();
+
+
+
+
+
+
+
+
+
+
+
 
 /* валидация форм редактирования профиля и добавления карточки */
 const validationFormEditProfile = new FormValidator(config, ".form_edit");
@@ -101,7 +108,7 @@ const handleEditProfileSubmit = function (event) {
 /* сохранение данных формы добавления новых карточек */
 const handleAddCardFormSubmit = function (event) {
   event.preventDefault();
-  const cardElement = generateACard(
+  const cardElement = generateCard(
     { name: inputNameNewCard.value, link: inputUrlNewCard.value },
     templateSelector
   );

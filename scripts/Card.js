@@ -1,9 +1,9 @@
 export class Card {
-  constructor(config, templateSelector, openPopupViewImage) {
+  constructor(config, templateSelector, handleImageClick) {
     this._name = config.name;
     this._link = config.link;
     this._templateSelector = templateSelector;
-    this._openPopupViewImage = openPopupViewImage;
+    this.__handleImageClick = handleImageClick;
   }
   _getTemplate() {
     const templateElement = document
@@ -18,20 +18,18 @@ export class Card {
     this._elementImg = this._element.querySelector(".element__img"); // найдем картинку и запишем в переменную, чтобы не искать несколько раз
     this._elementTitle = this._element.querySelector(".element__title"); // заголовок
 
-    this._setEventListenerClickForImage(); // слушатель клика по картинке
-    this._setEventListenerClickForLike(); // слушатель клика по кнопке лайка
-    this._setEventListenerClickForTrash(); // слушатель клика по кнопке удаления
 
     this._elementTitle.textContent = this._name;
     this._elementImg.alt = this._name;
     this._elementImg.src = this._link;
 
+    this._setEventListeners(); // установка слушателей
     return this._element;
   }
   _setEventListenerClickForImage() {
     /* слушатель на картинку карточки, при нажатии открывается попап просмотра изображения*/
     this._elementImg.addEventListener("click", () => {
-      this._openPopupViewImage(this._link, this._name);
+      this.__handleImageClick(this._link, this._name);
     });
   }
 
@@ -49,5 +47,10 @@ export class Card {
       .addEventListener("click", () => {
         this._element.remove();
       });
+  }
+  _setEventListeners() {
+    this._setEventListenerClickForImage(); // слушатель клика по картинке
+    this._setEventListenerClickForLike(); // слушатель клика по кнопке лайка
+    this._setEventListenerClickForTrash(); // слушатель клика по кнопке удаления
   }
 }
