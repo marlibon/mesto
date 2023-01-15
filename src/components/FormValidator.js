@@ -87,10 +87,4 @@ export class FormValidator {
   }
 }
 
-export const config = {
-  inputSelector: ".form__input",
-  submitButtonSelector: ".form__submit-btn",
-  inactiveButtonClass: "form__submit-btn_disable",
-  inputErrorClass: "form__input_type_error",
-  errorClass: "form__error_visible",
-};
+
