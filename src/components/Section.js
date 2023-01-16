@@ -18,6 +18,6 @@ export class Section {
 
   addItem(element) {
     //берет элемент и вставляет внутрь селектора (в конец) html верстку, в указанный в конструкторе див (this._container)
-    this._container.append(element);
+    this._container.prepend(element);
   }
 }
