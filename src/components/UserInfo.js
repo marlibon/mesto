@@ -6,8 +6,8 @@ export class UserInfo {
   }
   getUserInfo() {
     return {
-      title: this._profileTitle.textContent,
-      subtitle: this._profileSubtitle.textContent,
+      name: this._profileTitle.textContent,
+      activity: this._profileSubtitle.textContent,
     };
   }
   setUserInfo(title, subtitle) {
