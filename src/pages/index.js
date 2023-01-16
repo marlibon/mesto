@@ -1,8 +1,8 @@
+/* ИМПОРТЫ */
+// импорт стилей для вебпака
+import "./index.css";
 
-/* ИМПОРТ СТИЛЯ ДЛЯ ВЕБПАК */
-import './index.css';
-
-/* ИМПОРТ КЛАССОВ*/
+// импорт классов
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
 import { Section } from "../components/Section.js";
@@ -10,7 +10,7 @@ import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { UserInfo } from "../components/UserInfo.js";
 
-/* ИМПОРТ ПЕРЕМЕННЫХ*/
+// импорт переменных
 import {
   initialCards, // массив базовых 6 карточек
   buttonEditProfile, // кнопка вызова попапа редактирования профиля
@@ -22,7 +22,7 @@ import {
   templateSelector, // селектор шаблона карточки
   selectorViewImage, // селектор попапа просмотра картинки
   cardsSelector, // селектор дива для размещения карточек
-  config // селекторы для валидации
+  config, // селекторы для валидации
 } from "../utils/constants.js";
 
 /* ФУНКЦИИ */
@@ -58,64 +58,71 @@ const baseCards = new Section(
 
 baseCards.renderItems(); // метод класса Section - вывод на страницу
 
-// обработка данных с заполненных форм
-const handleFormSubmit = (event, valuesForm) => {
-  event.preventDefault();
-  const {
-    formName,
-    inputNameNewCard,
-    inputUrlNewCard,
-    inputTitle,
-    inputSubtitle,
-  } = valuesForm;
+// подстановка в поля инпута данных со страницы
+const handleSubstituteValuesEditProfile = () => {
+  const { name, activity } = userInfo.getUserInfo(); // данные со страницы
+  const inputList = popupEditProfile._getInputValues(); // забираем инпуты
 
-  if (formName.classList.contains("form_edit")) {
-    // обработка формы редактирования
-    editProfile.setUserInfo(inputTitle, inputSubtitle); //установить значения
-    editProfilePopup.close(); // закрываем попап
-  }
+  inputList["name"].value = name;
+  inputList["activity"].value = activity;
 
-  if (formName.classList.contains("form-add-element")) {
-    // обработка добавления карточки
-    const cardElement = newInstanceCard(
-      { name: inputNameNewCard, link: inputUrlNewCard }
-    );
-    baseCards.addItem(cardElement);
-    addCardPopup.close(); // закрываем попап
-  }
-
-  formName.reset(); // очистка формы
+  popupEditProfile.open();
 };
 
-/* ВАЛИДАЦИЯ */
-/* создание экземпляров для валидации форм редактирования профиля и добавления карточки */
-const validationFormEditProfile = new FormValidator(config, ".form_edit");
-const validationFormAddCard = new FormValidator(config, ".form-add-element");
+// обработка формы редактирования
+const handleFormSubmitEditProfile = (event, valuesForm) => {
+  event.preventDefault();
+  const { name, activity } = valuesForm;
+  userInfo.setUserInfo(name.value, activity.value); //установить значения
+  popupEditProfile.close(); // закрываем попап
+};
 
-validationFormEditProfile.enableValidation(); // включение
-validationFormAddCard.enableValidation(); // включение
+// обработка добавления карточки
+const handleFormSubmitAddCard = (event, valuesForm) => {
+  event.preventDefault();
+  const { title, url } = valuesForm;
+  const cardElement = newInstanceCard({ name: title.value, link: url.value });
+  baseCards.addItem(cardElement);
+  popupAddCard.close(); // закрываем попап
+};
 
 /* СОЗДАНИЕ ЭКЗЕМПЛЯРОВ ПОПАПОВ */
-const addCardPopup = new PopupWithForm(selectorAddCard, handleFormSubmit); // экземпляр для попапа добавления карточки
-const editProfilePopup = new PopupWithForm(
+
+// экземпляр для попапа добавления карточки
+const popupAddCard = new PopupWithForm(
+  selectorAddCard,
+  handleFormSubmitAddCard
+); 
+
+// экземпляр для попапа редактирования профиля
+const popupEditProfile = new PopupWithForm(
   selectorEditProfile,
-  handleFormSubmit
-); // экземпляр для попапа редактирования профиля
+  handleFormSubmitEditProfile
+); 
+
+// экземпляр для попапа просмотра картинок
 const viewImagePopup = new PopupWithImage(selectorViewImage); //// экземпляр для попапа показа картинки
 
 /* СОЗДАНИЕ ЭКЗЕМПЛЯРА РЕДАКТИРОВАНИЯ ПРОФИЛЯ */
-const editProfile = new UserInfo({
+const userInfo = new UserInfo({
   selectorProfileTitle,
   selectorProfileSubtitle,
 });
 
+/* ВАЛИДАЦИЯ */
+// создание экземпляра - редактирование профиля 
+const validationFormEditProfile = new FormValidator(config, ".form_edit");
+validationFormEditProfile.enableValidation(); // включение
+
+// создание экземпляра - добавление карточки 
+const validationFormAddCard = new FormValidator(config, ".form-add-element");
+validationFormAddCard.enableValidation(); // включение
+
 /* ПРОСЛУШИВАТЕЛИ */
 /* прослушиватель клика на кнопку редактирования профиля */
-buttonEditProfile.addEventListener("click", function () {
-  editProfilePopup.open(editProfile.getUserInfo());
-});
+buttonEditProfile.addEventListener("click", handleSubstituteValuesEditProfile);
 
 /* прослушиватель клика на кнопку добавления формы */
 buttonAddElement.addEventListener("click", function () {
-  addCardPopup.open();
+  popupAddCard.open();
 });

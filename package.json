@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack serve"
-    },
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/marlibon/mesto.git"
