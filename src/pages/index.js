@@ -32,7 +32,7 @@ const handleCardClick = (link, name) => {
 };
 
 // создание экземпляра класса Card и возврат собранной карточки
-const newInstanceCard = (item) => {
+const createCard = (item) => {
   const newElement = new Card(
     {
       name: item.name,
@@ -49,7 +49,7 @@ const baseCards = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      const newCard = newInstanceCard(item);
+      const newCard = createCard(item);
       baseCards.addItem(newCard);
     },
   },
@@ -61,11 +61,11 @@ baseCards.renderItems(); // метод класса Section - вывод на с
 // подстановка в поля инпута данных со страницы
 const handleSubstituteValuesEditProfile = () => {
   const { name, activity } = userInfo.getUserInfo(); // данные со страницы
-  const inputList = popupEditProfile._getInputValues(); // забираем инпуты
-
-  inputList["name"].value = name;
-  inputList["activity"].value = activity;
-
+  
+  const form = document.forms.form_edit; // находим форму
+  form.elements.name.value = name; // в форме находим инпут name и устанавливаем значение
+  form.elements.activity.value = activity; // аналогично с инпутом activity
+  
   popupEditProfile.open();
 };
 
@@ -73,7 +73,7 @@ const handleSubstituteValuesEditProfile = () => {
 const handleFormSubmitEditProfile = (event, valuesForm) => {
   event.preventDefault();
   const { name, activity } = valuesForm;
-  userInfo.setUserInfo(name.value, activity.value); //установить значения
+  userInfo.setUserInfo(name, activity); //установить значения
   popupEditProfile.close(); // закрываем попап
 };
 
@@ -81,7 +81,7 @@ const handleFormSubmitEditProfile = (event, valuesForm) => {
 const handleFormSubmitAddCard = (event, valuesForm) => {
   event.preventDefault();
   const { title, url } = valuesForm;
-  const cardElement = newInstanceCard({ name: title.value, link: url.value });
+  const cardElement = createCard({ name: title, link: url });
   baseCards.addItem(cardElement);
   popupAddCard.close(); // закрываем попап
 };
