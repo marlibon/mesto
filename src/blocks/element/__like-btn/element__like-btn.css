@@ -10,7 +10,6 @@
   border: none;
   cursor: pointer;
   transition: all 0.3s;
-  margin-top: 6px;
 
 }
 .element__like-btn:hover {

@@ -7,9 +7,10 @@
   display: grid;
   grid-template-columns: 235px 22px;
   grid-template-rows: 282px auto;
-  grid-template-areas: 'element__img element__img'
-  'element__title element__like-btn';
-  gap: 25px 4px;
+  grid-template-areas: 
+  'element__img element__img'
+  'element__title element__likes';
+  gap: 22px 5px;
   font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 900;

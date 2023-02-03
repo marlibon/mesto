@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   grid-area: element__title;
+  margin-top: 3px;
   margin-left: 21px;
   text-overflow: ellipsis;
   white-space: nowrap;
