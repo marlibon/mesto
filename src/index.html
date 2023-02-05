@@ -26,7 +26,7 @@
         <div class="profile__info">
           <div class="profile__avatar-container">
             <img
-            src="<%=require('./images/avatar.png')%>"
+            src="<%=require('./images/loading.gif')%>"
             alt="Аватарка профиля"
             class="profile__avatar"
           />
@@ -45,7 +45,7 @@
     <footer class="footer page__content">
       <p class="footer__text">&copy; 2022 Mesto Russia</p>
     </footer>
-    <section class="popup popup_form-edit">
+    <section class="popup popup_type_form-edit">
       <div class="popup__container">
         <button type="button" class="popup__close"></button>
         <h3 class="popup__title">Редактировать профиль</h3>
@@ -81,7 +81,7 @@
       </div>
     </section>
 
-    <section class="popup popup_form-add-element">
+    <section class="popup popup_type_form-add-element">
       <div class="popup__container">
         <button type="button" class="popup__close"></button>
         <h3 class="popup__title">Новое место</h3>
@@ -117,7 +117,7 @@
       </div>
     </section>
 
-    <section class="popup popup_view-image">
+    <section class="popup popup_type_view-image">
       <div class="popup__container popup__container_image">
         <button type="button" class="popup__close"></button>
         <figure class="popup__fig">
@@ -127,7 +127,7 @@
       </div>
     </section>
 
-    <section class="popup popup_confirmation">
+    <section class="popup popup_type_confirmation">
       <div class="popup__container">
         <button type="button" class="popup__close"></button>
         <h3 class="popup__title">Вы уверены?</h3>
@@ -143,7 +143,7 @@
       </div>
     </section>
 
-    <section class="popup popup_avatar">
+    <section class="popup popup_type_replace-avatar">
       <div class="popup__container">
         <button type="button" class="popup__close"></button>
         <h3 class="popup__title">Обновить аватар</h3>
@@ -156,7 +156,7 @@
             id="url-avatar"
             required
           />
-          <span class="form__error url-error"></span>
+          <span class="form__error url-avatar-error"></span>
           <button
             type="submit"
             name="form__submit"

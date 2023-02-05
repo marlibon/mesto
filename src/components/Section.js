@@ -1,6 +1,5 @@
 export class Section {
-  constructor ({items, renderer}, container) {
-    this._renderedItems = items; //массив items, это список товаров или список кнопок, то есть список того, что отобразить
+  constructor ({renderer}, container) {
     this._renderer = renderer; //колбек функция обработки каждого элемента из списка. Тут самой функции нет, только переменная, функция будет написана  в момент присвоения экземпляра. Делается, чтобы у классов была "слабая связь", то есть не прописаны конкретные условия использования других классов
     this._container = document.querySelector(container); //селектор контейнера, куда будет вставляться контент
   }
@@ -8,12 +7,10 @@ export class Section {
     //очистка контента в контейнере дива перед добавлением нового контента. Очищение нужно, чтобы не было дополнения в конец, а полная замена контента
     this._container.innerHTML = "";
   }
-  renderItems() {
+  renderItems = (items) => {
     //рендерит: сначала очищает контент с помощью clear(), потом проходит по каждому элементу массива, и внутри цикла forEach использует колбек-функцию this._renderer, которая пишется в момент присвоения экземпляра
     this._clear();
-    this._renderedItems.forEach(item => {
-      this._renderer(item);
-    })
+    items.forEach(item => this._renderer(item))
   }
 
   addItem(element) {

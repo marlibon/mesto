@@ -20,7 +20,6 @@ export class UserInfo {
   }
 
   setAvatar(link) {
-    console.log(link, this._profileAvatar);
     this._profileAvatar.src = link;
   }
   

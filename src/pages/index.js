@@ -15,30 +15,33 @@ import { Api } from "../components/Api.js";
 
 // импорт переменных
 import {
-  initialCards, // массив базовых 6 карточек
   buttonEditProfile, // кнопка вызова попапа редактирования профиля
   buttonAddElement, // кнопка вызова попапа добавления карточки
+  buttonSubmitAddCard, // кнопка сабмита добавления карточки на попапе
   selectorEditProfile, // селектор попапа редактирования профиля
   selectorProfileTitle, // селектор "имя пользователя" редактирования профиля
   selectorProfileSubtitle, // селектор "род деятельности" редактирования профиля
+  buttonSubmitEditProfile, // кнопка сабмита формы редактирования профиля на попапе
   profileAvatar, // селектор "аватарка" редактирования профиля
   buttonReplaceAvatar, // кнопка редактирования аватарки
   selectorPopupAvatar, // селектора попапа смены аватарки
+  buttonSubmitReplaceAvatar, // кнопка сабмита смены аватарки на попапе
   selectorAddCard, // селектор попапа добавления карточки
   templateSelector, // селектор шаблона карточки
   selectorViewImage, // селектор попапа просмотра картинки
   selectorConfirmation, // селектор попапа подтверждения удаления
+  buttonSubmitRemoveCard, // кнопка сабмита подтверждения удаления на попапе
   cardsSelector, // селектор дива для размещения карточек
   spinner, // контейнер картинки загрузки контента
   config, // селекторы для валидации
 } from "../utils/constants.js";
 
-/* ФУНКЦИИ */
+/* ----------------------- ФУНКЦИИ ----------------------- */
 
 
 
 
-// загрузка контента
+// картинка загрузки контента
 function renderLoading(isLoading) {
   if (isLoading) {
     spinner.classList.add("spinner_visible");
@@ -46,41 +49,52 @@ function renderLoading(isLoading) {
     spinner.classList.remove("spinner_visible");
   }
 }
+renderLoading(true); // анимация загрузки контента
+
+const changeStateButtonSubmit = (button, text = 'Сохранить', state = true) => {
+  button.textContent = text;
+  button.disabled = !state; // true это кнопка активна, false - не активна
+  state
+    ? button.classList.remove('form__submit_disable')
+    : button.classList.add('form__submit_disable');
+
+}
+
+
+
 // открытие попапа просмотра картинки (перенаправляем на метод открытия экземпляра Попапа просмотра изображений)
 const handleClickImage = (link, name) => {
   popupWithImage.open(link, name);
 };
 
 // обработка подтверждения удаления карточки
-const handleConfirmation = (that) => {
-  popupWithConfirmation.initialCard = that;
+const handleConfirmation = (newHandleSubmit) => {
   popupWithConfirmation.open();
+  popupWithConfirmation.handleSubmit(newHandleSubmit)
 };
 
 // обработка удаления карточки
 const handleRemoveCard = () => {
-  const buttonSubmitRemoveCard =
-    document.forms.form_confirmation.elements.form__submit;
-  buttonSubmitRemoveCard.textContent = "удаление";
-
+  changeStateButtonSubmit(buttonSubmitRemoveCard, "удаление...", false)
   api
-    .removeCard(popupWithConfirmation.initialCard["_id"])
+    .removeCard(card._id)
     .then((data) => {
       if (!data) {
         return Promise.reject(`Ошибка получения данных`);
       } else {
-        popupWithConfirmation.initialCard.remove();
-        buttonSubmitRemoveCard.textContent = "выполнено!";
+        card.remove();
+        changeStateButtonSubmit(buttonSubmitRemoveCard, "выполнено", false)
+
       }
     })
     .catch((err) => {
-      buttonSubmitRemoveCard.textContent = "ошибка запроса :(";
+      changeStateButtonSubmit(buttonSubmitRemoveCard, "ошибка запроса :(", false)
+
       console.log(err);
     })
     .finally(() => {
       setTimeout(() => {
-        buttonSubmitRemoveCard.textContent = "Да";
-        buttonSubmitRemoveCard.disabled = false;
+        changeStateButtonSubmit(buttonSubmitRemoveCard, "Да")
         popupWithConfirmation.close();
       }, 1200);
     });
@@ -101,34 +115,57 @@ const handleClickLike = (id, isLiked, that) => {
 }
 // создание экземпляра класса Card и возврат собранной карточки
 const createCard = (data) => {
-  const newElement = new Card(
+  const card = new Card(
     { ...data, idCurrentUser: userInfo.id },
     templateSelector,
-    handleClickImage,
-    handleConfirmation,
-    handleClickLike
+    {
+      handleClickImage,
+      handleCardDelete: (cardData) => {
+        popupWithConfirmation.open();
+        popupWithConfirmation.handleSubmit(() => {
+          changeStateButtonSubmit(buttonSubmitRemoveCard, "удаление...", false)
+          api
+            .removeCard(cardData._id)
+            .then((data) => {
+              if (!data) {
+                return Promise.reject(`Ошибка получения данных`);
+              } else {
+                card.remove();
+                changeStateButtonSubmit(buttonSubmitRemoveCard, "выполнено", false)
+
+              }
+            })
+            .catch((err) => {
+              changeStateButtonSubmit(buttonSubmitRemoveCard, "ошибка запроса :(", false)
+
+              console.log(err);
+            })
+            .finally(() => {
+              setTimeout(() => {
+                changeStateButtonSubmit(buttonSubmitRemoveCard, "Да")
+                popupWithConfirmation.close();
+              }, 1200);
+            })
+        })
+      },
+      handleClickLike
+    }
   );
-  return newElement.generateCard();
+  return card.generateCard();
 };
 
 // подстановка в поля инпута данных со страницы
 const handleSubstituteValuesEditProfile = () => {
+  console.log(userInfo.getUserInfo());
   const { name, about } = userInfo.getUserInfo(); // данные со страницы
-
-  const form = document.forms.form_edit; // находим форму
-  form.elements.name.value = name; // в форме находим инпут name и устанавливаем значение
-  form.elements.about.value = about; // аналогично с инпутом about
-
+  popupEditProfile.setValuesInForm({name, about});
   popupEditProfile.open();
 };
 
 // обработка формы редактирования
 const handleFormSubmitEditProfile = (event, valuesForm) => {
   event.preventDefault();
-  const buttonSubmitEditProfile =
-    document.forms.form_edit.elements.form__submit;
-  buttonSubmitEditProfile.textContent = "сохранение...";
-  buttonSubmitEditProfile.disabled = true;
+  changeStateButtonSubmit(buttonSubmitEditProfile, 'сохранение...', false)
 
   const { name, about } = valuesForm;
 
@@ -139,17 +176,18 @@ const handleFormSubmitEditProfile = (event, valuesForm) => {
         return Promise.reject(`Ошибка получения данных`);
       } else {
         userInfo.setUserInfo(data.name, data.about); //установить значения
-        buttonSubmitEditProfile.textContent = "выполнено!";
+        changeStateButtonSubmit(buttonSubmitEditProfile, 'выполнено!', false)
+
       }
     })
     .catch((err) => {
-      buttonSubmitEditProfile.textContent = "ошибка запроса :(";
+      changeStateButtonSubmit(buttonSubmitEditProfile, 'ошибка запроса :(', false)
+
       console.log(err);
     })
     .finally(() => {
       setTimeout(() => {
-        buttonSubmitEditProfile.textContent = "сохранить";
-        buttonSubmitEditProfile.disabled = false;
+        changeStateButtonSubmit(buttonSubmitEditProfile, 'сохранить')
         popupEditProfile.close();
       }, 1200);
     });
@@ -157,33 +195,28 @@ const handleFormSubmitEditProfile = (event, valuesForm) => {
 
 // обработка смены аватарки
 const handleFormSubmitReplaceAvatar = (event, valueForm) => {
-  const buttonSubmitReplaceAvatar =
-  document.forms.form_avatar.elements.form__submit;
-  
-  buttonSubmitReplaceAvatar.disabled = true;;
-  buttonSubmitReplaceAvatar.textContent = "сохранение...";
-  
+
+  changeStateButtonSubmit(buttonSubmitReplaceAvatar, 'сохранение...', false)
+
   api.replaceAvatar(valueForm.url)
-  .then((data) => {
-    if (!data) {
-      return Promise.reject(`Ошибка получения данных`);
-    } else {
-      console.log(data);
-      userInfo.setAvatar(data.avatar); //установить значения
-      buttonSubmitReplaceAvatar.textContent = "выполнено!";
-    }
-  })
-  .catch((err) => {
-    buttonSubmitReplaceAvatar.textContent = "ошибка запроса :(";
-    console.log(err);
-  })
-  .finally(() => {
-    setTimeout(() => {
-      buttonSubmitReplaceAvatar.textContent = "Сохранить";
-      buttonSubmitReplaceAvatar.disabled = false;
-      popupReplaceAvatar.close();
-    }, 1000);
-  });
+    .then((data) => {
+      if (!data) {
+        return Promise.reject(`Ошибка получения данных`);
+      } else {
+        userInfo.setAvatar(data.avatar); //установить значения
+        changeStateButtonSubmit(buttonSubmitReplaceAvatar, 'выполнено!', false)
+      }
+    })
+    .catch((err) => {
+      changeStateButtonSubmit(buttonSubmitReplaceAvatar, 'ошибка запроса :(', false)
+      console.log(err);
+    })
+    .finally(() => {
+      setTimeout(() => {
+        changeStateButtonSubmit(buttonSubmitReplaceAvatar, 'Сохранить')
+        popupReplaceAvatar.close();
+      }, 1000);
+    });
 
 
 }
@@ -192,9 +225,7 @@ const handleFormSubmitReplaceAvatar = (event, valueForm) => {
 const handleFormSubmitAddCard = (event, valuesForm) => {
   event.preventDefault();
 
-  const buttonSubmitAddCard = document.forms.form_add.elements.form__submit;
-  buttonSubmitAddCard.textContent = "добавление...";
-  buttonSubmitAddCard.disabled = true;
+  changeStateButtonSubmit(buttonSubmitAddCard, 'добавление...', false)
 
   const { title, url } = valuesForm;
   api
@@ -202,59 +233,63 @@ const handleFormSubmitAddCard = (event, valuesForm) => {
     .then((data) => {
       if (!data) return Promise.reject(`Ошибка получения данных`);
       const cardElement = createCard({ ...data, likes: [] });
-      cards.addItem(cardElement);
-      buttonSubmitAddCard.textContent = "выполнено!";
+      cardsSection.addItem(cardElement);
+      changeStateButtonSubmit(buttonSubmitAddCard, 'выполнено!', false)
     })
     .catch((err) => {
-      buttonSubmitAddCard.textContent = "ошибка запроса :(";
+      changeStateButtonSubmit(buttonSubmitAddCard, 'ошибка запроса :(', false)
       console.log(err);
     })
     .finally(() => {
       setTimeout(() => {
-        buttonSubmitAddCard.textContent = "создать";
-        buttonSubmitAddCard.disabled = false;
+        changeStateButtonSubmit(buttonSubmitAddCard, 'создать')
         popupAddCard.close();
       }, 1200);
     });
 };
 
-/* СОЗДАНИЕ ЭКЗЕМПЛЯРОВ ПОПАПОВ */
+/* ----------------------- СОЗДАНИЕ ЭКЗЕМПЛЯРОВ ПОПАПОВ ----------------------- */
 
 // экземпляр для попапа добавления карточки
 const popupAddCard = new PopupWithForm(
   selectorAddCard,
   handleFormSubmitAddCard
 );
+popupAddCard.setEventListeners();
 
 // экземпляр для попапа редактирования профиля
 const popupEditProfile = new PopupWithForm(
   selectorEditProfile,
   handleFormSubmitEditProfile
 );
+popupEditProfile.setEventListeners();
 
 // экземпляр для попапа просмотра картинок
 const popupWithImage = new PopupWithImage(selectorViewImage);
+popupWithImage.setEventListeners();
 
 // экземпляр для попапа подтверждения удаления карточки
 const popupWithConfirmation = new PopupWithConfirmation(
   selectorConfirmation,
   handleRemoveCard
 );
+popupWithConfirmation.setEventListeners();
 
-// экземпляр для попапа подтверждения удаления карточки
+// экземпляр для попапа изменения аватарки
 const popupReplaceAvatar = new PopupWithForm(
   selectorPopupAvatar,
   handleFormSubmitReplaceAvatar
 );
+popupReplaceAvatar.setEventListeners();
 
-/* СОЗДАНИЕ ЭКЗЕМПЛЯРА РЕДАКТИРОВАНИЯ ПРОФИЛЯ */
+/* ----------------------- СОЗДАНИЕ ЭКЗЕМПЛЯРА РЕДАКТИРОВАНИЯ ПРОФИЛЯ ----------------------- */
 const userInfo = new UserInfo({
   selectorProfileTitle,
   selectorProfileSubtitle,
   profileAvatar,
 });
 
-/* ВАЛИДАЦИЯ */
+/* ----------------------- ВАЛИДАЦИЯ ----------------------- */
 
 // создание экземпляра - редактирование профиля
 const validationFormEditProfile = new FormValidator(config, ".form_edit");
@@ -268,18 +303,14 @@ validationFormAddCard.enableValidation(); // включение
 const validationFormReplaceAvatar = new FormValidator(config, ".form_avatar");
 validationFormReplaceAvatar.enableValidation(); // включение
 
-/* ВСТАВКА КОНТЕНТА - Section */
-
+/* ----------------------- ВСТАВКА КОНТЕНТА - Section ----------------------- */
 // инициализация класса Section для использования вставок на страницу
-const cards = new Section(
-  {
-    items: "",
-    renderer: (item) => { },
-  },
+const cardsSection = new Section(
+  { renderer: (item) => cardsSection.addItem(item) },
   cardsSelector
 );
 
-/* API */
+/* ----------------------- API ----------------------- */
 
 // создание экземпляра подключения к серверу
 const api = new Api({
@@ -291,19 +322,11 @@ const api = new Api({
 });
 
 // загрузка с сервера данных пользователя
-const apiGetUserInfo = api.getUserInfo()
-;
+const apiGetUserInfo = api.getUserInfo();
 
 // выгрузка карточек с сервера и размещение на странице
-const apiGetInitialCards = api.getInitialCards()
-.then((response) => {
-  if (response.ok) {
-    renderLoading(true); // связь есть, значит можно включить картинку подзагрузки
-    return response.json();
-  } else {
-    return Promise.reject(`Ошибка: ${response.status}`);
-  }
-});
+const apiGetInitialCards = api.getInitialCards();
+
 Promise.all([apiGetUserInfo, apiGetInitialCards])
   .then(([userData, cardsData]) => {
     /* пользователь */
@@ -312,22 +335,23 @@ Promise.all([apiGetUserInfo, apiGetInitialCards])
     userInfo.setAvatar(userData.avatar); // установка аватарки
 
     /* карточки */
+    const cardsArray = [];
     cardsData
-      .splice(1, 20) // только первые ... карточек
       .forEach((data) => {
         const cardElement = createCard({
           ...data,
           idCurrentUser: userData._id,
         });
-        cards.addItem(cardElement); // добавление на страницу, cards это экземпляр Section
+        cardsArray.unshift(cardElement)
       });
+    cardsSection.renderItems(cardsArray)
   })
   .catch((error) => {
     console.error(error);
   })
   .finally(() => renderLoading(false));
 
-/* ПРОСЛУШИВАТЕЛИ */
+/* ----------------------- ПРОСЛУШИВАТЕЛИ ----------------------- */
 
 /* прослушиватель клика на кнопку редактирования профиля */
 buttonEditProfile.addEventListener("click", handleSubstituteValuesEditProfile);

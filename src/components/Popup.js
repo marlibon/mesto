@@ -6,13 +6,15 @@ export class Popup {
   }
 
   removeEventListeners() {
+    // на данный момент не используется
     this._buttonClose.removeEventListener("click", this.handleClosePopup);
-    document.removeEventListener("keyup", this._handleEscClose);
     this._popup.removeEventListener("click", this.checkClickByOverlay);
   }
+  
   close() {
     this._popup.classList.remove("popup_opened");
-    this.removeEventListeners();
+    document.removeEventListener("keyup", this._handleEscClose);
+
   }
 
   _handleEscClose = (e) => {
@@ -29,12 +31,12 @@ export class Popup {
 
   setEventListeners() {
     this._buttonClose.addEventListener("click", this.handleClosePopup);
-    document.addEventListener("keyup", this._handleEscClose);
     this._popup.addEventListener("click", this.checkClickByOverlay);
   }
 
   open() {
     this._popup.classList.add("popup_opened");
-    this.setEventListeners();
+    document.addEventListener("keyup", this._handleEscClose);
+
   }
 }
