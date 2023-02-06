@@ -7,24 +7,19 @@ export class Api {
     };
   }
 
-  _getResponseData(response) { 
-    return response.ok ? response.json() : Promise.reject(`Ошибка: ${response.status}`);
-  }
+  _getResponseData = res =>  res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+  
 
   getInitialCards = () => {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
-    }).then((response) => {
-      return this._getResponseData(response)
-    })
+    }).then(this._getResponseData)
   }
 
   getUserInfo = () => {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-    }).then((response) => {
-      return this._getResponseData(response)
-    })
+    }).then(this._getResponseData)
   }
 
   patchUserInfo = (name, about) => {
@@ -35,9 +30,7 @@ export class Api {
         name,
         about,
       }),
-    }).then((response) => {
-      return this._getResponseData(response)
-    })
+    }).then(this._getResponseData)
   }
 
   addCard = (name, link) => {
@@ -48,18 +41,14 @@ export class Api {
         name: name,
         link: link,
       }),
-    }).then((response) => {
-      return this._getResponseData(response)
-    })
+    }).then(this._getResponseData)
   }
 
   removeCard = (id) => {
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: "DELETE",
       headers: this._headers,
-    }).then((response) => {
-      return this._getResponseData(response)
-    })
+    }).then(this._getResponseData)
   }
 
   setLike = (id, value) => {
@@ -67,10 +56,9 @@ export class Api {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: `${value}`,
       headers: this._headers,
-    }).then((response) => {
-      return this._getResponseData(response)
-    })
+    }).then(this._getResponseData)
   }
+
   replaceAvatar = (avatar) => {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
@@ -78,8 +66,6 @@ export class Api {
       body: JSON.stringify({
         avatar,
       }),
-    }).then((response) => {
-      return this._getResponseData(response)
-    })
+    }).then(this._getResponseData)
   }
 }

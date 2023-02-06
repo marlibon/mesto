@@ -96,7 +96,7 @@ const handleRemoveCard = () => {
       setTimeout(() => {
         changeStateButtonSubmit(buttonSubmitRemoveCard, "Да")
         popupWithConfirmation.close();
-      }, 1200);
+      }, 800);
     });
 };
 // установка/снятие лайка
@@ -144,7 +144,7 @@ const createCard = (data) => {
               setTimeout(() => {
                 changeStateButtonSubmit(buttonSubmitRemoveCard, "Да")
                 popupWithConfirmation.close();
-              }, 1200);
+              }, 800);
             })
         })
       },
@@ -158,7 +158,7 @@ const createCard = (data) => {
 const handleSubstituteValuesEditProfile = () => {
   console.log(userInfo.getUserInfo());
   const { name, about } = userInfo.getUserInfo(); // данные со страницы
-  popupEditProfile.setValuesInForm({name, about});
+  popupEditProfile.setValuesInForm({ name, about });
   popupEditProfile.open();
 };
 
@@ -189,7 +189,7 @@ const handleFormSubmitEditProfile = (event, valuesForm) => {
       setTimeout(() => {
         changeStateButtonSubmit(buttonSubmitEditProfile, 'сохранить')
         popupEditProfile.close();
-      }, 1200);
+      }, 800);
     });
 };
 
@@ -215,7 +215,7 @@ const handleFormSubmitReplaceAvatar = (event, valueForm) => {
       setTimeout(() => {
         changeStateButtonSubmit(buttonSubmitReplaceAvatar, 'Сохранить')
         popupReplaceAvatar.close();
-      }, 1000);
+      }, 800);
     });
 
 
@@ -244,7 +244,7 @@ const handleFormSubmitAddCard = (event, valuesForm) => {
       setTimeout(() => {
         changeStateButtonSubmit(buttonSubmitAddCard, 'создать')
         popupAddCard.close();
-      }, 1200);
+      }, 800);
     });
 };
 
@@ -306,7 +306,16 @@ validationFormReplaceAvatar.enableValidation(); // включение
 /* ----------------------- ВСТАВКА КОНТЕНТА - Section ----------------------- */
 // инициализация класса Section для использования вставок на страницу
 const cardsSection = new Section(
-  { renderer: (item) => cardsSection.addItem(item) },
+  {
+    renderer: (item) => {
+
+      const cardElement = createCard({
+        ...item,
+        idCurrentUser: userInfo.id,
+      });    
+      cardsSection.addItem(cardElement)
+    }
+  },
   cardsSelector
 );
 
@@ -335,16 +344,7 @@ Promise.all([apiGetUserInfo, apiGetInitialCards])
     userInfo.setAvatar(userData.avatar); // установка аватарки
 
     /* карточки */
-    const cardsArray = [];
-    cardsData
-      .forEach((data) => {
-        const cardElement = createCard({
-          ...data,
-          idCurrentUser: userData._id,
-        });
-        cardsArray.unshift(cardElement)
-      });
-    cardsSection.renderItems(cardsArray)
+    cardsSection.renderItems(cardsData)
   })
   .catch((error) => {
     console.error(error);
